@@ -1,3 +1,4 @@
+'use strict';
 var express = require('express');
 var bodyParser = require('body-parser');
 var app = express();
@@ -8,6 +9,13 @@ app.use("/api/v1",appRouter)
 var numTasks=0;
 var tasks = {};
 var service = {};
+
+appRouter.get('/health', function(req, res) {
+
+    var result = {};
+    result.status = "up";
+    res.json(result);
+  });
 
 appRouter.post('/services', function(req, res) {
 
@@ -32,6 +40,4 @@ appRouter.get('/tasks/:id', function(req, res) {
     res.json(tasks[req.params.id]);
   });
 
-app.listen(5000, function() {
-  console.log('Example appx listening on port 5000!')
-});
+module.exports = app;
